@@ -1,4 +1,3 @@
-require 'simple/search/record'
 module Simple
   module Search
     class Store
@@ -8,15 +7,15 @@ module Simple
 
       def add(text)
         record = Record.new(text)
-        @index.push(record)
+        @index.add(record)
       end
 
       def search(term)
-        term_sanitized = normalize(term)
-        matches = RecordResultnew
-        @index.records do |record|
+        term_sanitized = Simple::Search::normalize(term)
+        matches = RecordResult.new
+        @index.records.each do |record|
           if record.terms.include?(term_sanitized)
-            matches.push(record)
+            matches.add(record)
           end
         end
         matches

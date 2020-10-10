@@ -1,3 +1,5 @@
+require 'securerandom'
+
 module Simple
   module Search
     class Record
@@ -5,9 +7,9 @@ module Simple
       attr_accessor :id, :original_text, :text
 
       def initialize(text)
-        @id = id
-        @original_text = original_text
-        @text = normalize(text)
+        @id = SecureRandom.uuid
+        @original_text = text
+        @text = Simple::Search::normalize(text)
       end
 
       def terms
@@ -15,15 +17,13 @@ module Simple
       end
 
       def term_frequency
-        frequency = {}
-        @terms.each do |term|
-          frequency[term] = {:count => @text.split(" ").size}
-        end
-        frequency
+        @text.split(" ").tally
       end
     end
 
     class RecordResult
+      attr_reader :records
+
       def initialize()
         @records = []
       end
