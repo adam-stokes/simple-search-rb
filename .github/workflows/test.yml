@@ -15,8 +15,3 @@ jobs:
       - name: run rake test
         run: |
           make check
-
-      - name: prints output of search results
-        run: |
-          make run
-          make SEARCHTERM=GrEaTeSt run
